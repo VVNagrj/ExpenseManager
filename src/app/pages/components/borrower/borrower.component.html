@@ -1,0 +1,63 @@
+<div>
+
+    <!-- Borrower -->
+    <div class="sameline" *ngIf="!isloading" style="width: 30%;min-height: 225px;">
+        <h1>{{borrowerDetails?.firstName}} {{borrowerDetails?.lastname}}</h1>
+        <p class="title">{{borrowerDetails?.displayValue}}</p>
+        <p>{{borrowerDetails?.addressArea}}</p>
+        <p><button>{{borrowerDetails?.mobileNo}}</button></p>
+    </div>
+
+</div>
+
+<!-- Loan -->
+<div class="sameline" *ngIf="!isloading" style="width: 90%;text-align: left;;">
+    <h1 style="margin-top: 10px;margin-left: 2%;">Loan Details</h1>
+    <div *ngFor="let loan of this.loanDetails let i = index;" style="margin-left: 10%;">
+        <label> loan Id :</label> <span>   {{loan.loanId}}</span><br>
+        <label> No of Collateral :</label> <span>   {{loan.collateralId.length}}</span><br>
+        <label> Loan Status :</label> <span>   {{loan.loanStatus}}</span><br>
+        <label> Loan Issued  Date :</label> <span>   {{loan.loanDate | date: 'dd/mm/yy'}}</span><br>
+        <label> Loan Amount :</label> <span>   {{loan.loanAmount | currency:'INR' }}</span><br>
+    </div>
+
+        <!-- Collateral -->
+        <div class="sameline" *ngIf="!isloading" style="width: 90%;">
+            <h1 style="text-align: left;margin-left: 4%;margin-top: 2%;">Collateral Details</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th width="10%" scope="col" sortable="borrowerId">#</th>
+                        <th width="10%" scope="col" sortable="details">Details</th>
+                        <th width="10%" scope="col" sortable="material">Material</th>
+                        <th width="10%" scope="col" sortable="type">Type</th>
+                        <th width="10%" scope="col" sortable="value">Value</th>
+                        <th width="10%" scope="col" sortable="wastageIncludedInGram">Wastage Included In Gram</th>
+                        <!-- (sort)="onSort($event)" -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let loan of this.collateralDetails let i = index;">
+                        <!-- <ngb-highlight [result]="loan.borrowerId" [term]="ticketTab?.searchTerm"></ngb-highlight> -->
+                        <td> {{i + 1}} </td>
+                        <td> {{loan.details}}</td>
+                        <td> {{loan.material}} </td>
+                        <td> {{loan.type}} </td>
+                        <td> {{loan.value | currency:'INR' }} </td>
+                        <td> {{loan.wastageIncludedInGram | currency:'INR' }} </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><b>Total</b></td>
+                        <td><b>{{this.totalValue | currency:'INR'}}</b></td>
+                    </tr>
+                </tbody>    
+            </table>
+        </div>
+        <div style="height: 30px;"></div>
+        
+
+</div>
