@@ -12,21 +12,5 @@ export class APIService {
         return this.http.get<any>(`${environment.serverUrl}/borrowers`);
     }
 
-    getBorrowersById(id:string): Observable<any> {
-        return this.http.get<any>(`${environment.serverUrl}/borrowers/${id}`);
-    }
-
-    //Collateral
-    getCollateral(filter:any): Observable<any> {
-        const url = `${environment.serverUrl}/collaterals?filter=`+ JSON.stringify(filter) 
-        return this.http.get<any>(url);
-    }
-
-    //Loan
-    getLoan(filter:any): Observable<any> {
-        const url = `${environment.serverUrl}/loans?filter=`+ JSON.stringify(filter) 
-        return this.http.get<any>(url);
-    }
-
 
 }
