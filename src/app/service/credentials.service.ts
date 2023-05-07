@@ -23,7 +23,10 @@ export class CredentialsService {
     return this._credentials;
   }
   get fullName(): string {
-    return `${this.credentials?.firstName ?? ''} ${this.credentials?.lastName ?? ''}`?.trim();
+    return `${this.credentials?.firstName ?? ''} ${this.credentials?.LastName ?? ''}`?.trim();
+  }
+  get userId(): number {
+    return this.credentials?.id
   }
 
   setCredentials(any?: any, remember?: boolean) {  
