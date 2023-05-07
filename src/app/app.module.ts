@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { APIService } from './service/api.servies.mock';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { APIService } from './service/api.servies.mock';
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    HttpClientModule 
+    HttpClientModule ,
+    FormsModule, 
+    ReactiveFormsModule
   ],
   providers: [APIService],
   bootstrap: [AppComponent]

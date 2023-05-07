@@ -4,7 +4,7 @@ import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
   {
-    path: 'kalaimagal',
+    path: 'expman',
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },
