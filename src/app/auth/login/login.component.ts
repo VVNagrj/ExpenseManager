@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { APIService } from 'src/app/service/api.servies.mock';
+import { CredentialsService } from 'src/app/service/credentials.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
     private router:Router,
     private formBuilder: FormBuilder,
     private apiService: APIService,
+    private CredentialsService : CredentialsService,
   ) {
     this.formInit()
    }
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
     this.apiService.getUsers(filter).subscribe(
       users => {
         if(users.length == 1){
+          this.CredentialsService.setCredentials(users[0],true)
           this.router.navigate(['/expman/dashboard']);
         } else {
           console.log('error')

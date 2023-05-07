@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { APIService } from './service/api.servies.mock';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CredentialsService } from './service/credentials.service';
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule, 
     ReactiveFormsModule
   ],
-  providers: [APIService],
+  providers: [APIService, CredentialsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
