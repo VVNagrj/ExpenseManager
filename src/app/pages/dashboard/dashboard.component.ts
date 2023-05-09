@@ -1,6 +1,6 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize, Observable } from 'rxjs';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { APIService } from 'src/app/service/api.servies.mock';
 import { CredentialsService } from 'src/app/service/credentials.service';
 
@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
     private apiService: APIService,
     private router:Router,
     private CredentialsService : CredentialsService,
+    private modalService: NgbModal,
   ) {
       this.userDetails = this.CredentialsService.credentials
       this.getBankDetails()
@@ -40,5 +41,29 @@ export class DashboardComponent implements OnInit {
       this.cashInHand = cashInHand
     })
   }
+
+  confirmationModel:any
+  openUserAssignmentModal(confirmation: any) {
+
+    this.confirmationModel ={
+      heading:'heading',
+      message:'message',
+      sucessbtn:'sucessbtn',
+      closebtn:'closebtn',
+      close:'s'
+    }
+
+    const ref = this.modalService.open(confirmation, {
+      centered: true,
+      backdrop: 'static',
+      modalDialogClass: 'modal-sml',
+      keyboard: false,
+      size: 'md',
+    });
+    ref.result.then(
+      (result) => {},
+      (reason) => {}
+    );
+   }
 
 }

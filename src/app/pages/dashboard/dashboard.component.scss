@@ -1,0 +1,28 @@
+.confirmation-modal {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    padding: 30px;
+    max-width: 576px;
+    .heading {
+      span {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 28px;
+        letter-spacing: -0.5px;
+        color: #1a1c21;
+      }
+    }
+
+    &-content {
+      margin-top: 25px;
+      p.message {
+        font-size: 16px;
+      }
+    }
+    .buttons-container {
+      a {
+        cursor: pointer;
+      }
+    }
+  }

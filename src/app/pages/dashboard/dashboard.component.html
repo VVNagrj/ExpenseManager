@@ -10,3 +10,25 @@
     Cash In Hand
     <div>{{this.cashInHand | json}}</div>
 </ng-container>
+
+<button (click)="openUserAssignmentModal(confirmation)">
+
+</button>
+
+<!-- Confirmation Modal -->
+<ng-template #confirmation let-modal>
+    <div class="confirmation-modal">
+      <div class="heading d-flex align-items-center justify-content-between">
+        <span>{{this.confirmationModel.heading}}</span>
+        <i *ngIf="this.confirmationModel.close" class="fas fa-times" (click)="modal.dismiss()"></i>
+      </div>
+      <div class="confirmation-modal-content">
+        <p class="message">{{this.confirmationModel.message}}</p>
+      </div>
+      <div class="buttons-container d-flex align-items-center justify-content-end gap-3">
+        <a *ngIf="this.confirmationModel.closebtn" class="click" (click)="modal.dismiss()">{{this.confirmationModel.closebtn}}</a>
+        <button *ngIf="this.confirmationModel.sucessbtn" class="btn btn-primary" (click)="modal.close()">{{this.confirmationModel.sucessbtn}}</button>
+      </div>
+    </div>
+  </ng-template>
+  
