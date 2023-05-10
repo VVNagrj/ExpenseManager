@@ -1,6 +1,7 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { AddExpencesComponent } from 'src/app/modal/add-expences/add-expences.component';
 import { APIService } from 'src/app/service/api.servies.mock';
 import { CredentialsService } from 'src/app/service/credentials.service';
 
@@ -42,26 +43,19 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  confirmationModel:any
-  openUserAssignmentModal(confirmation: any) {
-
-    this.confirmationModel ={
-      heading:'heading',
-      message:'message',
-      sucessbtn:'sucessbtn',
-      closebtn:'closebtn',
-      close:'s'
-    }
-
-    const ref = this.modalService.open(confirmation, {
+  AddExpences() {
+    
+    const ref = this.modalService.open(AddExpencesComponent, {
       centered: true,
       backdrop: 'static',
       modalDialogClass: 'modal-sml',
       keyboard: false,
-      size: 'md',
+      size: 'lg',
     });
     ref.result.then(
-      (result) => {},
+      (result) => {
+        console.log(result)
+      },
       (reason) => {}
     );
    }

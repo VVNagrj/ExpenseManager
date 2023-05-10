@@ -1,0 +1,30 @@
+<section style="padding: 20px;">
+<div *ngIf="this.form">
+    {{this.form.value| json}}
+    
+    <div class="login-container-item" [formGroup]="form">
+        <!-- {{form.value | json}} -->
+            <div class="mb-3 mt-3">
+              <label class="form-label">Category:</label>
+              <input type="text" class="form-control" placeholder="Category" formControlName="category">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Vendor:</label>
+              <input type="text" class="form-control" placeholder="Vendor" formControlName="vendor">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Amount:</label>
+                <input type="text" class="form-control" placeholder="Amount" formControlName="amount">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mode Of Payment:</label>
+                <input type="text" class="form-control" placeholder="Mode Of Payment" formControlName="modeOfPayment">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" (click)="activeModal.close(this.form.value)">Submit</button>
+       </div>
+</div>
+</section>
