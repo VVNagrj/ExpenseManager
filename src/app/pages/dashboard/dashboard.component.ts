@@ -23,21 +23,23 @@ export class DashboardComponent implements OnInit {
     private modalService: NgbModal,
   ) {
       this.userDetails = this.CredentialsService.credentials
-      this.getBankDetails()
-      this.getCashInHand()
   }
 
   ngOnInit(): void {}
+  ngAfterContentInit() {
+    this.getBankDetails()
+    this.getCashInHand()
+  }
 
   getBankDetails(){
-    let filter : any = { where: {userId:this.userDetails.userId}}
+    let filter : any = { where: {userId:this.CredentialsService.userId}}
     this.apiService.getBankDetails(filter).subscribe(bankDetails =>{
       this.bankDetails = bankDetails
     })
   }
 
   getCashInHand(){
-    let filter : any = { where: {userId:this.userDetails.userId}}
+    let filter : any = { where: {userId:this.CredentialsService.userId}}
     this.apiService.getCashInHand(filter).subscribe(cashInHand =>{
       this.cashInHand = cashInHand
     })
@@ -52,8 +54,13 @@ export class DashboardComponent implements OnInit {
       keyboard: false,
       size: 'lg',
     });
+    ref.componentInstance.operation = 'Expense';
+    ref.componentInstance.operator = 'Sub';
     ref.result.then(
       (result) => {
+        let diffamt :any[] = []
+        diffamt.push(result.amount)
+        result.diffrenceAmount = diffamt
         console.log(result)
       },
       (reason) => {}

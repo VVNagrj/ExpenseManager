@@ -25,5 +25,10 @@ export class APIService {
         return this.http.get<any>(`${environment.serverUrl}/cash-in-hands?filters=` + JSON.stringify(filter));
     }
 
+    //Expenses
+    getExpensesCount(filter?:any): Observable<any> {
+        return this.http.get<any>(`${environment.serverUrl}/expenses/count?filters=` + JSON.stringify(filter));
+    }
+
 
 }
