@@ -12,7 +12,7 @@ export class APIService {
         return this.http.get<any>(`${environment.serverUrl}/users?filters=` + JSON.stringify(filter));
     }
     getUsersCount(filter:any): Observable<any> {
-        return this.http.get<any>(`${environment.serverUrl}/users/count?filters=` + JSON.stringify(filter));
+        return this.http.get<any>(`${environment.serverUrl}/users/count`);
     }
 
     //Bank
@@ -27,8 +27,22 @@ export class APIService {
 
     //Expenses
     getExpensesCount(filter?:any): Observable<any> {
-        return this.http.get<any>(`${environment.serverUrl}/expenses/count?filters=` + JSON.stringify(filter));
+        return this.http.get<any>(`${environment.serverUrl}/expenses/count`);
     }
+
+    //Transactions
+    gettransactionsCount(filter?:any): Observable<any> {
+        return this.http.get<any>(`${environment.serverUrl}/transactions/count`);
+    }
+
+    insertransactions(data: any): Observable<any> {
+        return this.http.post<any>(`${environment.serverUrl}/transactions`,data);
+    }
+
+    inserexpenses(data: any): Observable<any> {
+        return this.http.post<any>(`${environment.serverUrl}/expenses`,data);
+    }
+
 
 
 }

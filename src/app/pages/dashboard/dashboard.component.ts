@@ -1,6 +1,7 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { count } from 'rxjs';
 import { AddExpencesComponent } from 'src/app/modal/add-expences/add-expences.component';
 import { APIService } from 'src/app/service/api.servies.mock';
 import { CredentialsService } from 'src/app/service/credentials.service';
@@ -15,6 +16,8 @@ export class DashboardComponent implements OnInit {
   userDetails: any;
   bankDetails: any;
   cashInHand:any;
+  linkedAccountBefore:any[] = [];
+  linkedAccountAfter:any[] = [];
 
   constructor(
     private apiService: APIService,
@@ -35,6 +38,10 @@ export class DashboardComponent implements OnInit {
     let filter : any = { where: {userId:this.CredentialsService.userId}}
     this.apiService.getBankDetails(filter).subscribe(bankDetails =>{
       this.bankDetails = bankDetails
+      this.bankDetails.forEach((bank: any) => {
+        this.linkedAccountBefore.push( { type : 'Bank Transfer', id: bank.id, BankName:bank.bankName, Balance:bank.accountBalance })
+        this.linkedAccountAfter.push( { type : 'Bank Transfer', id: bank.id, BankName:bank.bankName, Balance:bank.accountBalance })
+      })
     })
   }
 
@@ -42,6 +49,10 @@ export class DashboardComponent implements OnInit {
     let filter : any = { where: {userId:this.CredentialsService.userId}}
     this.apiService.getCashInHand(filter).subscribe(cashInHand =>{
       this.cashInHand = cashInHand
+      this.cashInHand.forEach((cash: any) => {
+        this.linkedAccountBefore.push( { type : 'Cash', id:  cash.id, Balance: cash.amountInHand }) 
+        this.linkedAccountAfter.push( { type : 'Cash', id:  cash.id, Balance: cash.amountInHand }) 
+      })
     })
   }
 
@@ -58,13 +69,61 @@ export class DashboardComponent implements OnInit {
     ref.componentInstance.operator = 'Sub';
     ref.result.then(
       (result) => {
-        let diffamt :any[] = []
+        let diffamt :number[] = []
         diffamt.push(result.amount)
         result.diffrenceAmount = diffamt
-        console.log(result)
+        this.transaction(result)
+
       },
       (reason) => {}
     );
+   }
+
+   transaction(expences:any){
+        
+    this.linkedAccountAfter.filter(data => {
+      
+      if((data.type == expences.paymentType) && (data.id == expences.paymentId)){
+
+          if(expences.operator == 'Sub'){
+            data.Balance = data.Balance - expences.amount
+          } else if(expences.operator == 'Add'){
+            data.Balance = data.Balance + expences.amount
+          }
+      }    
+    })
+
+    this.InsertTrans(expences)
+   }
+   InsertTrans(expences: any){
+
+    let id : number = 0
+    this.apiService.gettransactionsCount().subscribe( e =>{
+      id = e.count + 1
+      let data = {
+        id: id,
+        userId: this.CredentialsService.userId,
+        operation: expences.operation,
+        operator: expences.operator,
+        amount: expences.amount,
+        paymentType: expences.paymentType,
+        paymentMode: expences.modeOfPayment,
+        paymentId: expences.paymentId,
+
+        linkedAccountBefore: this.linkedAccountBefore,
+        linkedAccountAfter: this.linkedAccountAfter,
+        expenseId: null      
+      } 
+
+      this.apiService.inserexpenses(expences).subscribe(expences => {
+        data.expenseId = expences.id
+        this.apiService.insertransactions(data).subscribe(transactions =>{
+
+        })
+      })
+  })
+
+    
    }
 
 }
