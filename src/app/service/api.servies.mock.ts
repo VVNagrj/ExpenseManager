@@ -19,10 +19,16 @@ export class APIService {
     getBankDetails(filter:any): Observable<any> {
         return this.http.get<any>(`${environment.serverUrl}/bank-details?filters=` + JSON.stringify(filter));
     }
+    updateBankDetails(data: any,where: any): Observable<any> {
+        return this.http.patch<any>(`${environment.serverUrl}/bank-details/?where=`+ JSON.stringify(where) ,data);
+    }
 
     //CIH
     getCashInHand(filter:any): Observable<any> {
         return this.http.get<any>(`${environment.serverUrl}/cash-in-hands?filters=` + JSON.stringify(filter));
+    }
+    updateCashInHand(data: any,id: number): Observable<any> {
+        return this.http.put<any>(`${environment.serverUrl}/cash-in-hands/${id}`,data);
     }
 
     //Expenses

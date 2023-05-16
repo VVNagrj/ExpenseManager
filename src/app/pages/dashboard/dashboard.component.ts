@@ -29,7 +29,13 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  
   ngAfterContentInit() {
+    this.loadDashboard()
+  }
+  loadDashboard(){
+    this.linkedAccountBefore = [];
+    this.linkedAccountAfter = [];
     this.getBankDetails()
     this.getCashInHand()
   }
@@ -80,22 +86,24 @@ export class DashboardComponent implements OnInit {
    }
 
    transaction(expences:any){
-        
+    
+    let balanceamt: number = 0 
     this.linkedAccountAfter.filter(data => {
       
       if((data.type == expences.paymentType) && (data.id == expences.paymentId)){
 
           if(expences.operator == 'Sub'){
-            data.Balance = data.Balance - expences.amount
+            balanceamt = data.Balance - expences.amount
           } else if(expences.operator == 'Add'){
-            data.Balance = data.Balance + expences.amount
+            balanceamt = data.Balance + expences.amount
           }
+          data.Balance = balanceamt
       }    
     })
 
-    this.InsertTrans(expences)
+    this.InsertTrans(expences,balanceamt)
    }
-   InsertTrans(expences: any){
+   InsertTrans(expences: any,balanceamt : number){
 
     let id : number = 0
     this.apiService.gettransactionsCount().subscribe( e =>{
@@ -118,6 +126,25 @@ export class DashboardComponent implements OnInit {
       this.apiService.inserexpenses(expences).subscribe(expences => {
         data.expenseId = expences.id
         this.apiService.insertransactions(data).subscribe(transactions =>{
+
+          if (expences.paymentType == 'Cash') {
+
+            let data1 = {
+              id: expences.paymentId,
+              userId: this.CredentialsService.userId,
+              amountInHand: balanceamt,
+            }
+            this.apiService.updateCashInHand(data1, expences.paymentId).subscribe(cashInHand => {
+              this.loadDashboard()
+            })
+          } else if (expences.paymentType == 'Bank Transfer') {
+
+            let where1 = { id: expences.paymentId }
+            let data1 = { accountBalance: balanceamt }
+            this.apiService.updateBankDetails(data1, where1).subscribe(cashInHand => {
+              this.loadDashboard()
+            })
+          } 
 
         })
       })
