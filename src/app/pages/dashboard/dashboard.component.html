@@ -17,3 +17,31 @@
 
 
 {{this.linkedAccountBefore | json}}
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+            <th scope="col">Date</th>
+			<th scope="col">Expenses</th>
+			<th scope="col">Category</th>
+			<th scope="col">Vendor</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Balance</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let expense of expenses; index as i">
+			<th scope="row">{{ expenses.length - i }}</th>
+            <td>{{ expense.date  | date: 'dd/MM/yyyy' }}</td>
+			<td>{{ expense.expenses }}</td>
+			<td>{{ expense.category }}</td>
+            <td>{{ expense.vendor }}</td>
+            <td>{{ expense.amount }}</td>  
+            <td *ngFor="let accDetails of getTransFromExp(expense.id)">
+                {{accDetails.BankName || accDetails.type}} => 
+                {{accDetails.Balance}}
+            </td>                      
+		</tr>
+	</tbody>
+</table>

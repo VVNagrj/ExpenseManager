@@ -65,6 +65,7 @@ export class AddExpencesComponent implements OnInit {
           operation: [this.operation, [Validators.required]],
           operator: [this.operator, [Validators.required]],
 
+          expenses: [undefined, [Validators.required]],
           category: [undefined, [Validators.required]],
           vendor: [undefined, [Validators.required]],
           amount: [undefined, [Validators.required]],

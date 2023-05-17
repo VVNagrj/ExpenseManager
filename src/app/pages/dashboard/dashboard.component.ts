@@ -16,6 +16,8 @@ export class DashboardComponent implements OnInit {
   userDetails: any;
   bankDetails: any;
   cashInHand:any;
+  expenses:any[];
+  transactions:any[];
   linkedAccountBefore:any[] = [];
   linkedAccountAfter:any[] = [];
 
@@ -38,6 +40,8 @@ export class DashboardComponent implements OnInit {
     this.linkedAccountAfter = [];
     this.getBankDetails()
     this.getCashInHand()
+    this.getExpenses()
+    this.gettransactions()
   }
 
   getBankDetails(){
@@ -59,6 +63,20 @@ export class DashboardComponent implements OnInit {
         this.linkedAccountBefore.push( { type : 'Cash', id:  cash.id, Balance: cash.amountInHand }) 
         this.linkedAccountAfter.push( { type : 'Cash', id:  cash.id, Balance: cash.amountInHand }) 
       })
+    })
+  }
+
+  getExpenses(){
+    let filter : any = { where: {userId:this.CredentialsService.userId},order: "id DESC"}
+    this.apiService.getExpenses(filter).subscribe(expenses =>{
+      this.expenses = expenses
+    })
+  }
+
+  gettransactions(){
+    let filter : any = { where: {userId:this.CredentialsService.userId}}
+    this.apiService.gettransactions(filter).subscribe(transactions =>{
+      this.transactions = transactions
     })
   }
 
@@ -150,7 +168,10 @@ export class DashboardComponent implements OnInit {
       })
   })
 
-    
+   }
+
+   getTransFromExp(id:number){
+    return this.transactions?.filter(data =>  data.expenseId == id)[0]?.linkedAccountAfter
    }
 
 }

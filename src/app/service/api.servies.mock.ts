@@ -9,7 +9,7 @@ export class APIService {
 
     //Users
     getUsers(filter:any): Observable<any> {
-        return this.http.get<any>(`${environment.serverUrl}/users?filters=` + JSON.stringify(filter));
+        return this.http.get<any>(`${environment.serverUrl}/users?filter=` + JSON.stringify(filter));
     }
     getUsersCount(filter:any): Observable<any> {
         return this.http.get<any>(`${environment.serverUrl}/users/count`);
@@ -17,7 +17,7 @@ export class APIService {
 
     //Bank
     getBankDetails(filter:any): Observable<any> {
-        return this.http.get<any>(`${environment.serverUrl}/bank-details?filters=` + JSON.stringify(filter));
+        return this.http.get<any>(`${environment.serverUrl}/bank-details?filter=` + JSON.stringify(filter));
     }
     updateBankDetails(data: any,where: any): Observable<any> {
         return this.http.patch<any>(`${environment.serverUrl}/bank-details/?where=`+ JSON.stringify(where) ,data);
@@ -25,7 +25,7 @@ export class APIService {
 
     //CIH
     getCashInHand(filter:any): Observable<any> {
-        return this.http.get<any>(`${environment.serverUrl}/cash-in-hands?filters=` + JSON.stringify(filter));
+        return this.http.get<any>(`${environment.serverUrl}/cash-in-hands?filter=` + JSON.stringify(filter));
     }
     updateCashInHand(data: any,id: number): Observable<any> {
         return this.http.put<any>(`${environment.serverUrl}/cash-in-hands/${id}`,data);
@@ -35,20 +35,25 @@ export class APIService {
     getExpensesCount(filter?:any): Observable<any> {
         return this.http.get<any>(`${environment.serverUrl}/expenses/count`);
     }
+    inserexpenses(data: any): Observable<any> {
+        return this.http.post<any>(`${environment.serverUrl}/expenses`,data);
+    }
+    getExpenses(filter?:any): Observable<any> {
+        return this.http.get<any>(`${environment.serverUrl}/expenses?filter=`+ JSON.stringify(filter));
+    }
 
     //Transactions
     gettransactionsCount(filter?:any): Observable<any> {
         return this.http.get<any>(`${environment.serverUrl}/transactions/count`);
     }
 
+    gettransactions(filter?:any): Observable<any> {
+        return this.http.get<any>(`${environment.serverUrl}/transactions?filter=` + JSON.stringify(filter));
+    }
+
     insertransactions(data: any): Observable<any> {
         return this.http.post<any>(`${environment.serverUrl}/transactions`,data);
     }
-
-    inserexpenses(data: any): Observable<any> {
-        return this.http.post<any>(`${environment.serverUrl}/expenses`,data);
-    }
-
 
 
 }
