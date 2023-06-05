@@ -96,6 +96,7 @@ export class DashboardComponent implements OnInit {
         let diffamt :number[] = []
         diffamt.push(result.amount)
         result.diffrenceAmount = diffamt
+        result.date = new Date(result.date)
         this.transaction(result)
 
       },
