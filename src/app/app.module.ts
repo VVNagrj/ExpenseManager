@@ -11,13 +11,15 @@ import { APIService } from './service/api.servies.mock';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CredentialsService } from './service/credentials.service';
 import { AddExpencesComponent } from './modal/add-expences/add-expences.component';
+import { SelfTransferComponent } from './modal/self-transfer/self-transfer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AddExpencesComponent
+    AddExpencesComponent,
+    SelfTransferComponent
   ],
   imports: [
     CommonModule,

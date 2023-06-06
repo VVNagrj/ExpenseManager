@@ -31,16 +31,6 @@ export class APIService {
         return this.http.put<any>(`${environment.serverUrl}/cash-in-hands/${id}`,data);
     }
 
-    //Expenses
-    getExpensesCount(filter?:any): Observable<any> {
-        return this.http.get<any>(`${environment.serverUrl}/expenses/count`);
-    }
-    inserexpenses(data: any): Observable<any> {
-        return this.http.post<any>(`${environment.serverUrl}/expenses`,data);
-    }
-    getExpenses(filter?:any): Observable<any> {
-        return this.http.get<any>(`${environment.serverUrl}/expenses?filter=`+ JSON.stringify(filter));
-    }
 
     //Transactions
     gettransactionsCount(filter?:any): Observable<any> {

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { count } from 'rxjs';
 import { AddExpencesComponent } from 'src/app/modal/add-expences/add-expences.component';
+import { SelfTransferComponent } from 'src/app/modal/self-transfer/self-transfer.component';
 import { APIService } from 'src/app/service/api.servies.mock';
 import { CredentialsService } from 'src/app/service/credentials.service';
 
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit {
   userDetails: any;
   bankDetails: any;
   cashInHand:any;
-  expenses:any[];
+
   transactions:any[];
   linkedAccountBefore:any[] = [];
   linkedAccountAfter:any[] = [];
@@ -40,7 +41,6 @@ export class DashboardComponent implements OnInit {
     this.linkedAccountAfter = [];
     this.getBankDetails()
     this.getCashInHand()
-    this.getExpenses()
     this.gettransactions()
   }
 
@@ -66,15 +66,9 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  getExpenses(){
-    let filter : any = { where: {userId:this.CredentialsService.userId},order: "id DESC"}
-    this.apiService.getExpenses(filter).subscribe(expenses =>{
-      this.expenses = expenses
-    })
-  }
 
   gettransactions(){
-    let filter : any = { where: {userId:this.CredentialsService.userId}}
+    let filter : any = { where: {userId:this.CredentialsService.userId},order: "date DESC"}
     this.apiService.gettransactions(filter).subscribe(transactions =>{
       this.transactions = transactions
     })
@@ -131,19 +125,13 @@ export class DashboardComponent implements OnInit {
         id: id,
         userId: this.CredentialsService.userId,
         operation: expences.operation,
-        operator: expences.operator,
-        amount: expences.amount,
-        paymentType: expences.paymentType,
-        paymentMode: expences.modeOfPayment,
-        paymentId: expences.paymentId,
-
         linkedAccountBefore: this.linkedAccountBefore,
         linkedAccountAfter: this.linkedAccountAfter,
-        expenseId: null      
+        expenseId: id,
+        additionalProp1 : expences,
+        date : new Date(expences.date)     
       } 
 
-      this.apiService.inserexpenses(expences).subscribe(expences => {
-        data.expenseId = expences.id
         this.apiService.insertransactions(data).subscribe(transactions =>{
 
           if (expences.paymentType == 'Cash') {
@@ -166,13 +154,28 @@ export class DashboardComponent implements OnInit {
           } 
 
         })
-      })
   })
 
    }
 
-   getTransFromExp(id:number){
-    return this.transactions?.filter(data =>  data.expenseId == id)[0]?.linkedAccountAfter
+
+   selfTransfer() {
+    
+    const ref = this.modalService.open(SelfTransferComponent, {
+      centered: true,
+      backdrop: 'static',
+      modalDialogClass: 'modal-sml',
+      keyboard: false,
+      size: 'lg',
+    });
+    ref.componentInstance.operation = 'SelfTransfer';
+    ref.componentInstance.operator = 'Sub';
+    ref.result.then(
+      (result) => {
+        console.log(result)
+      },
+      (reason) => {}
+    );
    }
 
 }

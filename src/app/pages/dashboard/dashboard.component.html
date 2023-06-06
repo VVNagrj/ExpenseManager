@@ -14,6 +14,9 @@
 <button (click)="AddExpences()">
     Add Expences
 </button>
+<button (click)="selfTransfer()">
+    Self Transfer
+</button>
 
 
 {{this.linkedAccountBefore | json}}
@@ -31,17 +34,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let expense of expenses; index as i">
+		<tr *ngFor="let transaction of transactions; index as i">
 			<th scope="row">{{ i + 1 }}</th>
-            <td>{{ expense.date  | date: 'dd/MM/yyyy' }}</td>
-			<td>{{ expense.expenses }}</td>
-			<td>{{ expense.category }}</td>
-            <td>{{ expense.vendor }}</td>
-            <td>{{ expense.amount }}</td>  
-            <td *ngFor="let accDetails of getTransFromExp(expense.id)">
+            <td>{{ transaction.date  | date: 'dd/MM/yyyy' }}</td>
+			<td>{{ transaction?.additionalProp1?.expenses }}</td>
+			<td>{{ transaction?.additionalProp1?.category }}</td>
+            <td>{{ transaction?.additionalProp1?.vendor }}</td>
+            <td>{{ transaction?.additionalProp1?.amount }}</td>  
+            <td *ngFor="let accDetails of transaction.linkedAccountAfter">
                 {{accDetails.BankName || accDetails.type}} => 
                 {{accDetails.Balance}}
-            </td>                      
+            </td>     
 		</tr>
 	</tbody>
 </table>

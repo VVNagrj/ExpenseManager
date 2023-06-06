@@ -6,11 +6,11 @@ import { APIService } from 'src/app/service/api.servies.mock';
 import { CredentialsService } from 'src/app/service/credentials.service';
 
 @Component({
-  selector: 'app-add-expences',
-  templateUrl: './add-expences.component.html',
-  styleUrls: ['./add-expences.component.scss']
+  selector: 'app-self-transfer',
+  templateUrl: './self-transfer.component.html',
+  styleUrls: ['./self-transfer.component.scss']
 })
-export class AddExpencesComponent implements OnInit {
+export class SelfTransferComponent implements OnInit {
   
   form: FormGroup;
   transactionsId:number
