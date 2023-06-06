@@ -85,6 +85,9 @@ export class DashboardComponent implements OnInit {
     });
     ref.componentInstance.operation = 'Expense';
     ref.componentInstance.operator = 'Sub';
+    ref.componentInstance.bankDetails = this.bankDetails
+    ref.componentInstance.cashInHand = this.cashInHand[0]
+
     ref.result.then(
       (result) => {
         let diffamt :number[] = []
@@ -169,7 +172,9 @@ export class DashboardComponent implements OnInit {
       size: 'lg',
     });
     ref.componentInstance.operation = 'SelfTransfer';
-    ref.componentInstance.operator = 'Sub';
+    ref.componentInstance.bankDetails = this.bankDetails
+    ref.componentInstance.cashInHand = this.cashInHand[0]
+
     ref.result.then(
       (result) => {
         console.log(result)

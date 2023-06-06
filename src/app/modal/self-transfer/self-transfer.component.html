@@ -36,27 +36,6 @@
                 </select>
             </div>
 
-            <div class="mb-3" *ngIf="this.form.value.paymentType == 'Bank Transfer'">
-                 <label class="form-label">Mode of Payment</label>
-                 <div *ngFor="let mode of this.bankDetails">
-                      <h6>{{mode.bankName}}</h6>  
-
-                      <div>
-                        <input type="radio" value="debitCard" (click)="setModeOfPayment(mode.id,'debitCard')" name="modeOfPayment">
-                          <label for="html">Debit Card / Bank Transfer</label><br>    
-                      </div>
-                      <div *ngIf="mode?.isHavingUpi" >
-                        <input type="radio" value="UPI" (click)="setModeOfPayment(mode.id,'UPI')" name="modeOfPayment">
-                          <label for="html">UPI</label><br>    
-                      </div>
-                      <div *ngIf="mode?.isHavingCreditCard" >
-                        <input type="radio" value="creditCard" (click)="setModeOfPayment(mode.id,'creditCard')" name="modeOfPayment">
-                          <label for="html">Credit Card</label><br>    
-                      </div>
-
-                 </div>   
-            </div>    
-
             <button type="submit" [disabled]="this.form.invalid" class="btn btn-primary" (click)="activeModal.close(this.form.value)">Submit</button>
        </div>
 </div>

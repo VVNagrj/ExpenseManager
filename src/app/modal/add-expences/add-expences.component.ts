@@ -27,29 +27,8 @@ export class AddExpencesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private apiService: APIService,
     private CredentialsService : CredentialsService,
-  ) {
-    this.getBankDetails()
-    this.getCashInHand()
-    this.getTransactionsCount()
-  }
+  ) {}
 
-  getBankDetails(){
-    let filter : any = { where: {userId:this.CredentialsService.userId}}
-    this.apiService.getBankDetails(filter).subscribe(bankDetails =>{
-      this.bankDetails = bankDetails;            
-    })
-  }
-  getCashInHand(){
-    let filter : any = { where: {userId:this.CredentialsService.userId}}
-    this.apiService.getCashInHand(filter).subscribe(cashInHand =>{
-      this.cashInHand = cashInHand[0]
-    })
-  }
-  getTransactionsCount(){
-    this.apiService.gettransactionsCount().subscribe(transactions =>{ 
-      this.transactionsId = transactions.count + 1
-    })
-  }
 
   ngAfterContentInit() {
     setTimeout(() => { this.formInit() }, 2000);
@@ -59,7 +38,6 @@ export class AddExpencesComponent implements OnInit {
   formInit(){
     this.form = this.formBuilder.group(
       {
-          id: [this.transactionsId, [Validators.required]],
           date: [new Date(), [Validators.required]],
           userId: [this.CredentialsService.userId, [Validators.required]],
           operation: [this.operation, [Validators.required]],
