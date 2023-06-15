@@ -4,23 +4,8 @@
     <div class="login-container-item" [formGroup]="form">
         <!-- {{form.value | json}} -->
             <div class="mb-3 mt-3">
-              <label class="form-label">Expenses Date:</label>
+              <label class="form-label">Transfer Date:</label>
               <input type="date"  class="form-control" placeholder="Enter Date" formControlName="date">
-            </div>
-
-            <div class="mb-3 mt-3">
-              <label class="form-label">Expenses:</label>
-              <input type="text" class="form-control" placeholder="Expenses" formControlName="expenses">
-            </div>
-
-            <div class="mb-3 mt-3">
-              <label class="form-label">Category:</label>
-              <input type="text" class="form-control" placeholder="Category" formControlName="category">
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Vendor:</label>
-              <input type="text" class="form-control" placeholder="Vendor" formControlName="vendor">
             </div>
 
             <div class="mb-3">
@@ -29,12 +14,20 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Payment Type:</label>
-                <select class="form-control" id="country" formControlName="paymentType">
-                    <option value=''>--Mode Of Payment--</option>
-                    <option *ngFor="let value of paymentType" [ngValue]="value">{{ value }}</option>
+                <label class="form-label">Transfer From:</label>
+                <select class="form-control" formControlName="paymentIdFrom">
+                    <option value=''>--Select From Account--</option>
+                    <option *ngFor="let value of transferFrom" [ngValue]="value">{{ value.Name }}</option>
                 </select>
             </div>
+
+            <div class="mb-3" *ngIf="form.get('paymentIdFrom')?.value">
+              <label class="form-label">Transfer To:</label>
+              <select class="form-control" formControlName="paymentIdTo">
+                  <option value=''>--Select To Account--</option>
+                  <option *ngFor="let value of transferTo" [ngValue]="value">{{ value.Name }}</option>
+              </select>
+          </div>
 
             <button type="submit" [disabled]="this.form.invalid" class="btn btn-primary" (click)="activeModal.close(this.form.value)">Submit</button>
        </div>

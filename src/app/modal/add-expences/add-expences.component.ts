@@ -13,7 +13,6 @@ import { CredentialsService } from 'src/app/service/credentials.service';
 export class AddExpencesComponent implements OnInit {
   
   form: FormGroup;
-  transactionsId:number
 
   paymentType: any = ['Cash','Bank Transfer'];
   bankDetails: any = []
